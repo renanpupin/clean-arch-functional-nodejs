@@ -1,4 +1,4 @@
-import {SafeParseReturnType, z} from 'zod'
+import {z} from 'zod'
 import {UserEntity} from './user.entity'
 import {logger} from '../../drivers/logger'
 
@@ -10,22 +10,18 @@ const UserSchema: z.ZodType<UserEntity> = z.object({
 
 type UserZodType = z.infer<typeof UserSchema>
 
-const parse = (user: unknown): UserEntity => {
-    return UserSchema.parse(user)
+export const isValid = (user: Partial<UserEntity>): {success: boolean; error: unknown | null} => {
+    const validate = UserSchema.safeParse(user)
+    return {
+        success: validate.success,
+        error: !validate.success ? validate.error : null
+    }
 }
 
-const safeParse = (user: unknown): SafeParseReturnType<UserEntity, UserEntity> => {
-    return UserSchema.safeParse(user)
-}
+export const validate = (user: Partial<UserEntity>): boolean => {
+    const result = UserSchema.parse(user)
 
-export const isValid = (user: unknown): boolean => {
-    const result = safeParse(user)
-    return result.success
-}
-
-export const validate = (user: unknown): boolean => {
-    const result = parse(user)
-    logger.debug(`validate result=${result}`)
+    logger.debug(result)
 
     return true
 }

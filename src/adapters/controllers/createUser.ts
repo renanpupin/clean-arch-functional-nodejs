@@ -3,7 +3,7 @@ import {ControllerResponseType} from './types'
 import {UserRepositoryType} from '../../domain/repositories/user.repository'
 import {UserEntity} from '../../domain/entites/user.entity'
 import {createUserService} from '../../application/useCases/createUser.service'
-import {CreateUserDto} from '../../domain/entites/dtos/createUser.dto'
+import {CreateUserDto} from '../../domain/dtos/createUser.dto'
 
 export const createUserController = async ({
     userRepository,

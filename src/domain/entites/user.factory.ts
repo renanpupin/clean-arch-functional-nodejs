@@ -2,10 +2,10 @@ import {UserEntity} from './user.entity'
 import {isValid, validate} from './user.invariants'
 
 export const UserFactory = {
-    isValid: (user: unknown): boolean => {
-        return isValid(user)
+    isValid: (user: Partial<UserEntity>): boolean => {
+        return isValid(user).success
     },
-    create: (user: unknown): UserEntity => {
+    create: (user: Partial<UserEntity>): UserEntity => {
         validate(user)
 
         return user as UserEntity
