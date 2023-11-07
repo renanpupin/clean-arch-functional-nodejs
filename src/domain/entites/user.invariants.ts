@@ -1,19 +1,19 @@
-import {SafeParseReturnType, z} from "zod";
-import {User} from './user'
+import {SafeParseReturnType, z} from 'zod'
+import {UserEntity} from './user.entity'
 
-const UserSchema: z.ZodType<User> = z.object({
+const UserSchema: z.ZodType<UserEntity> = z.object({
     id: z.string(),
     name: z.string().min(2),
     createdAt: z.date()
-});
+})
 
-type UserZodType = z.infer<typeof UserSchema>;
+type UserZodType = z.infer<typeof UserSchema>
 
-export const parse = (user: unknown): User => {
+export const parse = (user: unknown): UserEntity => {
     return UserSchema.parse(user)
 }
 
-export const safeParse = (user: unknown): SafeParseReturnType<User, User> => {
+export const safeParse = (user: unknown): SafeParseReturnType<UserEntity, UserEntity> => {
     return UserSchema.safeParse(user)
 }
 
