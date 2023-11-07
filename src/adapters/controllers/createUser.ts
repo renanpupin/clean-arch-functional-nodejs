@@ -1,4 +1,3 @@
-import {getUsersService} from '../../application/useCases/getUsers.service'
 import {ControllerResponseType} from './types'
 import {UserRepositoryType} from '../../domain/repositories/user.repository'
 import {UserEntity} from '../../domain/entites/user.entity'
@@ -16,7 +15,7 @@ export const createUserController = async ({
         throw new Error('User not found.')
     }
 
-    const newUser = await createUserService(userRepository, userDto)
+    const newUser = await createUserService(userRepository).create(userDto)
 
     return {
         payload: {user: newUser}
