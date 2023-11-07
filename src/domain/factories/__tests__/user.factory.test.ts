@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest'
 import {UserFactory} from '../user.factory'
 
-test('test UseEntity with success', async () => {
+test('test user factory with success', async () => {
     const user = UserFactory.create({name: 'Alice'})
 
     expect(user).toEqual({

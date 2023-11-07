@@ -8,13 +8,17 @@ const UserSchema: z.ZodType<UserEntity> = z.object({
     createdAt: z.date().optional()
 })
 
+//if we want to export types from zod
 type UserZodType = z.infer<typeof UserSchema>
 
-export const isValid = (user: Partial<UserEntity>): {success: boolean; error: unknown | null} => {
+export const isValid = (user: Partial<UserEntity>): {success: boolean; error: string | null} => {
     const validate = UserSchema.safeParse(user)
+
+    logger.debug(validate)
+
     return {
         success: validate.success,
-        error: !validate.success ? validate.error : null
+        error: !validate.success ? validate.error.message : null
     }
 }
 
