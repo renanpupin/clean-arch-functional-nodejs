@@ -1,6 +1,7 @@
 import {UserRepositoryType} from '../../domain/repositories/user.repository'
+import {PrismaDbType} from '../../drivers/db/prismaDb'
 
-export const UserMemoryDbDao: (db: unknown) => UserRepositoryType = db => {
+export const UserPrismaDbDao: (db: PrismaDbType) => UserRepositoryType = db => {
     return {
         create: (user: unknown) => {
             return db.users.create(user)
