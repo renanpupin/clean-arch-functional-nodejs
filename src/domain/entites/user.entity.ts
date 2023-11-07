@@ -1,5 +1,5 @@
 export type UserEntity = {
-    id: string
+    id?: string
     name: string
-    createdAt: Date
+    createdAt?: Date
 }

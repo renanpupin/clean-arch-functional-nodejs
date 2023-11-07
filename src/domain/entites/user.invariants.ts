@@ -3,9 +3,9 @@ import {UserEntity} from './user.entity'
 import {logger} from '../../drivers/logger'
 
 const UserSchema: z.ZodType<UserEntity> = z.object({
-    id: z.string(),
+    id: z.string().optional(),
     name: z.string().min(2),
-    createdAt: z.date()
+    createdAt: z.date().optional()
 })
 
 type UserZodType = z.infer<typeof UserSchema>
