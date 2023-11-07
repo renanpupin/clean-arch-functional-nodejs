@@ -1,3 +1,3 @@
-export interface CreateUserDto {
-    name: string
-}
+import {UserEntity} from '../entites/user.entity'
+
+export type CreateUserDto = Omit<UserEntity, 'id' | 'createdAt'>

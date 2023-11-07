@@ -1,10 +1,11 @@
-import express from 'express'
 import {Router, Request, Response} from 'express'
 import {getUsersController} from '../../adapters/controllers/getUsers'
 import {HttpResponse} from '../presenters/httpResponse'
 import {UserMemoryDbDao} from '../../adapters/daos/userMemoryDb.dao'
 import {MemoryDb} from '../db/memoryDb'
 import {createUserController} from '../../adapters/controllers/createUser'
+import {CreateUserDto} from '../../domain/dtos/createUser.dto'
+import {TypedRequest} from './types'
 
 const route = Router()
 
@@ -22,7 +23,7 @@ route.get('/users', async (req: Request, res: Response) => {
     }
 })
 
-route.post('/users', async (req: Request, res: Response) => {
+route.post('/users', async (req: TypedRequest<{user: CreateUserDto}>, res: Response) => {
     try {
         const {payload} = await createUserController({
             userRepository: UserMemoryDbDao(MemoryDb),
