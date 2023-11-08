@@ -1,13 +1,12 @@
 import {UserEntity} from '../entites/user.entity'
 import {isValid, validate} from '../entites/user.invariants'
 import {getUsername} from '../entites/user.calculations'
-import {CreateUserDto} from '../dtos/createUser.dto'
 
 export const UserFactory = {
     isValid: (user: Partial<UserEntity>): boolean => {
         return isValid(user).success
     },
-    create: (user: CreateUserDto): UserEntity => {
+    create: (user: Partial<UserEntity>): UserEntity => {
         validate(user)
 
         return Object.freeze({
@@ -15,12 +14,12 @@ export const UserFactory = {
             username: getUsername(user.name)
         })
     },
-    update: (user: UserEntity, newProperties: Partial<UserEntity>): UserEntity => {
-        const updatedUser = Object.freeze({
+    update: (user: UserEntity, updatedProperties: Partial<UserEntity>): UserEntity => {
+        const updatedUser = UserFactory.create({
             ...user,
-            ...newProperties
+            ...updatedProperties
         })
-        validate(updatedUser)
+        validate(updatedUser, updatedProperties)
 
         return updatedUser
     }

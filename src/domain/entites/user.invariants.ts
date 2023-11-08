@@ -11,9 +11,17 @@ const UserSchema: z.ZodType<UserEntity> = z.object({
 //if we want to export types from zod
 type UserZodType = z.infer<typeof UserSchema>
 
+export const validateUpdateEntityBusinessRules = (
+    user: UserEntity,
+    updatedProperties: Partial<UserEntity>
+) => {
+    if (updatedProperties?.id && updatedProperties?.id !== user.id) {
+        throw new Error('Cannot update user id.')
+    }
+}
+
 export const isValid = (user: Partial<UserEntity>): {success: boolean; error: string | null} => {
     const validate = UserSchema.safeParse(user)
-
     logger.debug(validate)
 
     return {
@@ -22,10 +30,14 @@ export const isValid = (user: Partial<UserEntity>): {success: boolean; error: st
     }
 }
 
-export const validate = (user: Partial<UserEntity>): boolean => {
+export const validate = (
+    user: Partial<UserEntity>,
+    updatedProperties: Partial<UserEntity>
+): boolean => {
     const result = UserSchema.parse(user)
-
     logger.debug(result)
+
+    validateUpdateEntityBusinessRules(user, updatedProperties)
 
     return true
 }
