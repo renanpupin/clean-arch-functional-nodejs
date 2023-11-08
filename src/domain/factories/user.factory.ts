@@ -10,9 +10,18 @@ export const UserFactory = {
     create: (user: CreateUserDto): UserEntity => {
         validate(user)
 
-        return {
+        return Object.freeze({
             ...user,
             username: getUsername(user.name)
-        }
+        })
+    },
+    update: (user: UserEntity, newProperties: Partial<UserEntity>): UserEntity => {
+        const updatedUser = Object.freeze({
+            ...user,
+            ...newProperties
+        })
+        validate(updatedUser)
+
+        return updatedUser
     }
 }
