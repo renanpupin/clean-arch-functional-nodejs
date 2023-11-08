@@ -18,6 +18,10 @@ export const validateUpdateEntityBusinessRules = (
     if (updatedProperties?.id && updatedProperties?.id !== user.id) {
         throw new Error('Cannot update user id.')
     }
+
+    if (updatedProperties?.username && updatedProperties?.username !== user.username) {
+        throw new Error('Cannot update user username.')
+    }
 }
 
 export const isValid = (user: Partial<UserEntity>): {success: boolean; error: string | null} => {
